@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "gsap": "^3.12.2",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2",
+    "three": "^0.154.0",
     "vue": "^3.2.13"
   },
   "devDependencies": {
