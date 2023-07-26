@@ -19,6 +19,8 @@ export default (params = {}) => {
   renderer.shadowMap.enabled = true;
 
   window.onresize = () => {
+    const width = params.width || window.innerWidth;
+    const height = params.height || window.innerHeight;
     renderer.setSize(width, height);
     //更新宽高比
     camera.aspect = width / height;
