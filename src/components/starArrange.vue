@@ -88,10 +88,8 @@ const params = {
   time: 0,
 };
 const handleClick = () => {
-  console.log(params.time);
   params.time ? restart(params) : meshHeart(params);
 };
 
 camera.position.set(0, 5, -30);
-scene.add(starInstance);
 </script>
