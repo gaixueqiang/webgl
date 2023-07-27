@@ -90,6 +90,6 @@ const params = {
 const handleClick = () => {
   params.time ? restart(params) : meshHeart(params);
 };
-
+scene.add(starInstance);
 camera.position.set(0, 5, -30);
 </script>
