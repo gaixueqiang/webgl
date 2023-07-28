@@ -4,12 +4,11 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
-import gsap from 'gsap';
 import createThree from '@/hooks/createThree';
 const dom = ref(null);
 const { renderer, scene, camera } = createThree();
 
-const lon2xyz = (r, longitude, latitude) => {
+const lon2xyz = (R, longitude, latitude) => {
   let lon = (longitude * Math.PI) / 180;
   const lat = (latitude * Math.PI) / 180;
   lon = -lon;
@@ -35,13 +34,18 @@ const material = new THREE.MeshPhongMaterial({
 
 const map = new THREE.Mesh(geometry, material);
 
-for (let i = 0; i < 15; i++) {
-  const lightGeometry = new THREE.ConeGeometry(0.1, 1, 32);
+for (let i = 0; i < 100; i++) {
+  const lightGeometry = new THREE.ConeGeometry(0.1, 2, 32);
   const lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
   const cone = new THREE.Mesh(lightGeometry, lightMaterial);
   const longitude = Math.random() * 360 - 180;
   const latitude = Math.random() * 180 - 90;
-  const position = cone.position.set(Math.random());
+  const position = lon2xyz(5, longitude, latitude);
+  cone.position.set(position.x, position.y, position.z);
+  cone.quaternion.setFromUnitVectors(
+    new THREE.Vector3(0, 1, 0),
+    position.normalize()
+  );
   scene.add(cone);
 }
 
