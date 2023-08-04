@@ -2,7 +2,8 @@
   <!-- <AutomobileExhibit></AutomobileExhibit> -->
   <!-- <StarArrange count="100"></StarArrange> -->
   <!-- <Acanthosphere></Acanthosphere> -->
-  <Ball></Ball>
+  <!-- <Ball></Ball> -->
+  <LineMove></LineMove>
 </template>
 
 <script>
@@ -10,9 +11,10 @@ import AutomobileExhibit from './components/AutomobileExhibit.vue';
 import StarArrange from '@/components/starArrange.vue';
 import Acanthosphere from '@/components/Acanthosphere.vue';
 import Ball from '@/components/Ball.vue';
+import LineMove from '@/components/LineMove.vue';
 export default {
   name: 'App',
-  components: { AutomobileExhibit, StarArrange, Acanthosphere, Ball },
+  components: { AutomobileExhibit, StarArrange, Acanthosphere, Ball, LineMove },
 };
 </script>
 <style lang="scss">
