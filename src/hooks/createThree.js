@@ -12,6 +12,11 @@ export default (params = {}) => {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
   });
+  let renderWorld = () => {};
+
+  const updateRenderWorld = (fn) => {
+    renderWorld = fn;
+  };
 
   renderer.setSize(width, height);
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -29,6 +34,7 @@ export default (params = {}) => {
   };
 
   const render = () => {
+    renderWorld();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
   };
@@ -48,5 +54,5 @@ export default (params = {}) => {
 
   scene.add(camera);
 
-  return { scene, renderer, camera };
+  return { scene, renderer, camera, updateRenderWorld };
 };
