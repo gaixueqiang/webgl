@@ -5,28 +5,18 @@
 //物体自定义轨迹运动
 import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
+import gsap from 'gsap';
 import createThree from '@/hooks/createThree';
 const dom = ref(null);
 const { renderer, scene, camera, updateRenderWorld } = createThree();
-camera.position.set(0, 10, -10);
 
 onMounted(() => {
   dom.value.appendChild(renderer.domElement);
 });
-//创建平面
-const planeGeometry = new THREE.PlaneGeometry(50, 50);
-const planeMaterial = new THREE.MeshLambertMaterial({
-  color: '#fff',
-});
-
-const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-
-planeMesh.rotateX(-Math.PI / 2);
-
-scene.add(planeMesh);
 
 const ambient = new THREE.AmbientLight();
 ambient.intensity = 5;
+scene.add(ambient);
 
 const curve = new THREE.CatmullRomCurve3([
   new THREE.Vector3(-10, 0, 10),
@@ -36,5 +26,30 @@ const curve = new THREE.CatmullRomCurve3([
   new THREE.Vector3(10, 0, 10),
 ]);
 
-scene.add(ambient);
+const points = curve.getPoints(10);
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
+const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+const curveObject = new THREE.Line(geometry, material);
+scene.add(curveObject);
+
+const coneGeometry = new THREE.ConeGeometry(0.2, 0.6, 32);
+const coneMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+const cone = new THREE.Mesh(coneGeometry, coneMaterial);
+scene.add(cone);
+
+const params = { time: 0 };
+
+console.log(curve.getPointAt(0.8), curve.getPointAt(0.9));
+gsap.to(params, {
+  time: 1,
+  duration: 20,
+  repeat: -1,
+  onUpdate: () => {
+    cone.position.copy(curve.getPointAt(params.time));
+    const target = params.time + 0.001;
+    if (target <= 1) {
+      cone.lookAt(curve.getPointAt(target));
+    }
+  },
+});
 </script>
